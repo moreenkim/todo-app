@@ -1,4 +1,20 @@
 document.addEventListener('click', function (e) {
+  //delete feature
+  if (e.target.classList.contains('delete-me')) {
+    if (confirm('Are you sure?')) {
+      axios
+        .post('/delete-item', {
+          id: e.target.getAttribute('data-id'),
+        })
+        .then(function () {
+          e.target.parentElement.parentElement.remove();
+        })
+        .catch(function () {
+          console.log('try again later');
+        });
+    }
+  }
+  //update feature
   if (e.target.classList.contains('edit-me')) {
     let userInput = prompt(
       'enter the new text',
