@@ -4,6 +4,12 @@ let sanitizeHTML = require('sanitize-html');
 
 let app = express();
 let db;
+
+let port = process.env.PORT;
+if (port === null || port === '') {
+  port = 3002;
+}
+
 app.use(express.static('public'));
 
 let connectionString =
@@ -13,7 +19,7 @@ mongodb.connect(connectionString, { useNewUrlParser: true }, function (
   client
 ) {
   db = client.db();
-  app.listen(3002);
+  app.listen(port);
 });
 
 app.use(express.json());
