@@ -3,6 +3,7 @@ let mongodb = require('mongodb');
 
 let app = express();
 let db;
+app.use(express.static('public'));
 
 let connectionString =
   'mongodb+srv://todoAppUser:todoApp@cluster0.meydx.mongodb.net/ToDoApp?retryWrites=true&w=majority';
@@ -14,6 +15,7 @@ mongodb.connect(connectionString, { useNewUrlParser: true }, function (
   app.listen(3002);
 });
 
+app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.get('/', function (req, res) {
@@ -57,6 +59,9 @@ app.get('/', function (req, res) {
     </ul>
     
   </div>
+
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src= "/browser.js"></script>
   
 </body>
 </html>
@@ -68,4 +73,9 @@ app.post('/create-item', function (req, res) {
   db.collection('items').insertOne({ text: req.body.item }, function () {
     res.redirect('/');
   });
+});
+
+app.post('/update-item', function (req, res) {
+  console.log(req.body.text);
+  res.send('success');
 });
